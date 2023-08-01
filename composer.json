@@ -1,5 +1,6 @@
 {
     "name": "createlinux/oauth",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Createlinux\\OAuth\\": "src/"
