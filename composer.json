@@ -1,0 +1,15 @@
+{
+    "name": "createlinux/oauth",
+    "autoload": {
+        "psr-4": {
+            "Createlinux\\OAuth\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "孟小成",
+            "email": "litchilab@foxmail.com"
+        }
+    ],
+    "require": {}
+}
