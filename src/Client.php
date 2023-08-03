@@ -100,7 +100,7 @@ class Client
             'client_id' => $this->clientId,
             'grant_type' => 'authorization_code',
             'code' => $code,
-            'redirect_uri' => $this->redirectURI
+            'redirect_uri' => urlencode($this->redirectURI)
         ];
     }
 
