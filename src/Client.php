@@ -17,7 +17,6 @@ final class Client
     protected string $clientId = '';
     protected string $score = '';
     protected string $state = '';
-    protected string $openAuthTokenURI;
 
     public function __construct()
     {
@@ -97,7 +96,7 @@ final class Client
      */
     public function generateAuthTokenURI()
     {
-        return ltrim($this->openAuthClientURI, "/") . "/api/v1/open_auth_tokens";
+        return ltrim($this->openAuthServerURI, "/") . "/api/v1/open_auth_tokens";
     }
 
     /**
