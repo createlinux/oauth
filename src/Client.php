@@ -60,16 +60,21 @@ final class Client
     }
 
     /**
-     * 开发环境下设置认证服务器链接
+     * 开发环境下设置认证服务器客户端链接
      * @param string $oauthURI
      * @return void
      */
-    public function setOpenAuthCodeURIForDev(string $oauthURI)
+    public function setOpenAuthClientURIForDev(string $oauthURI)
     {
         //
         $this->openAuthClientURI = $oauthURI;
     }
 
+    /**
+     * 开发环境下设置认证服务器服务器端链接
+     * @param string $oauthURI
+     * @return void
+     */
     public function setOpenAuthServerURIForDev(string $oauthURI)
     {
         $this->openAuthServerURI = $oauthURI;
