@@ -4,18 +4,20 @@ namespace Createlinux\OAuth;
 
 use Illuminate\Support\Facades\Http;
 
-class Client
+final class Client
 {
 
     /**
      * 认证服务器认证链接
      * @var string
      */
-    protected string $oauthURI = 'https://accounts.litchilab.com';
+    protected string $openAuthClientURI = 'https://accounts.litchilab.com';
+    protected string $openAuthServerURI = 'https://accounts-api.litchilab.com';
     protected string $redirectURI = '';
     protected string $clientId = '';
     protected string $score = '';
     protected string $state = '';
+    protected string $openAuthTokenURI;
 
     public function __construct()
     {
@@ -63,13 +65,22 @@ class Client
      * @param string $oauthURI
      * @return void
      */
-    public function setOauthURIForDev(string $oauthURI)
+    public function setOpenAuthCodeURIForDev(string $oauthURI)
     {
         //
-        $this->oauthURI = $oauthURI;
+        $this->openAuthClientURI = $oauthURI;
     }
 
-    public function generateAuthURI()
+    public function setOpenAuthServerURIForDev(string $oauthURI)
+    {
+        $this->openAuthServerURI = $oauthURI;
+    }
+
+    /**
+     * 获取授权码URI
+     * @return string
+     */
+    public function generateAuthCodeURI()
     {
         $queryParams = http_build_query([
             "redirect_uri" => urlencode($this->redirectURI),
@@ -78,7 +89,7 @@ class Client
             "scope" => $this->score,
             "state" => $this->state
         ]);
-        return $this->oauthURI . "?" . $queryParams;
+        return $this->openAuthClientURI . "?" . $queryParams;
     }
 
     /**
@@ -86,7 +97,7 @@ class Client
      */
     public function generateAuthTokenURI()
     {
-        return ltrim($this->oauthURI, "/") . "/api/v1/open_auth_tokens";
+        return ltrim($this->openAuthClientURI, "/") . "/api/v1/open_auth_tokens";
     }
 
     /**
