@@ -125,7 +125,7 @@ final class Client
      */
     public function removeAccessToken(string $accessToken)
     {
-        return Http::post($this->openAuthServerURI."/api/v1/open_auth_tokens/{$accessToken}");
+        return Http::delete($this->openAuthServerURI."/api/v1/open_auth_tokens/{$accessToken}");
     }
 
 
