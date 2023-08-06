@@ -119,5 +119,14 @@ final class Client
         ];
     }
 
+    /**
+     * 退出登录，删除访问令牌
+     * @return
+     */
+    public function removeAccessToken(string $accessToken)
+    {
+        return Http::post($this->openAuthServerURI."/{$accessToken}");
+    }
+
 
 }
