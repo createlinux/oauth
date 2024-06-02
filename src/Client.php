@@ -2,8 +2,6 @@
 
 namespace Createlinux\OAuth;
 
-use Illuminate\Support\Facades\Http;
-
 final class Client
 {
 
@@ -126,12 +124,12 @@ final class Client
      */
     public function removeAccessToken(string $accessToken)
     {
-        return Http::delete($this->openAuthServerURI."/api/v1/open_auth_tokens/{$accessToken}");
+        return Http::delete($this->openAuthServerURI . "/api/v1/open_auth_tokens/{$accessToken}", $accessToken);
     }
 
     public function createNewAuthToken()
     {
-        return Http::post($this->openAuthServerURI,$this->generateAuthTokenData($this->getCode()));
+        return Http::post($this->openAuthServerURI, $this->generateAuthTokenData($this->getCode()));
     }
 
     public function getCode(): string
