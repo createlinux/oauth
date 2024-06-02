@@ -129,7 +129,7 @@ final class Client
 
     public function createNewAuthToken()
     {
-        return Http::post($this->openAuthServerURI, $this->generateAuthTokenData($this->getCode()));
+        return Http::post($this->openAuthServerURI."/api/v1/open_auth_tokens", $this->generateAuthTokenData($this->getCode()));
     }
 
     public function getCode(): string
