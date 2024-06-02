@@ -11,12 +11,13 @@ final class Client
      * 认证服务器认证链接
      * @var string
      */
-    protected string $openAuthClientURI = 'https://accounts.litchilab.com';
+    protected string $openAuthClientURI = 'https://accounts.lizhiruanjian.com';
     protected string $openAuthServerURI = 'https://accounts-api.litchilab.com';
     protected string $redirectURI = '';
     protected string $clientId = '';
     protected string $score = '';
     protected string $state = '';
+    protected string $code = '';
 
     public function __construct()
     {
@@ -128,5 +129,18 @@ final class Client
         return Http::delete($this->openAuthServerURI."/api/v1/open_auth_tokens/{$accessToken}");
     }
 
+    public function createNewAuthToken()
+    {
+        return Http::post($this->openAuthServerURI,$this->generateAuthTokenData($this->getCode()));
+    }
 
+    public function getCode(): string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): void
+    {
+        $this->code = $code;
+    }
 }
