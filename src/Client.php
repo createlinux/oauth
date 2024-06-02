@@ -139,7 +139,9 @@ final class Client
      */
     public function getUserByAccessToken(string $accessToken)
     {
-        return Http::get($this->openAuthServerURI."/api/v1/open_auth_tokens/".$accessToken,[]);
+        return Http::get($this->openAuthServerURI."/api/v1/open_auth_tokens/".$accessToken,[
+            'Authorization: Bearer '.$accessToken
+        ]);
     }
 
     public function getCode(): string
