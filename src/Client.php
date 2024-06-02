@@ -132,6 +132,16 @@ final class Client
         return Http::post($this->openAuthServerURI."/api/v1/open_auth_tokens", $this->generateAuthTokenData($this->getCode()));
     }
 
+    /**
+     * 返回token信息和用户信息
+     * @param $accessToken string 访问令牌
+     * @return bool|string
+     */
+    public function getUserByAccessToken(string $accessToken)
+    {
+        return Http::get($this->openAuthServerURI."/api/v1/open_auth_tokens/".$accessToken,[]);
+    }
+
     public function getCode(): string
     {
         return $this->code;
