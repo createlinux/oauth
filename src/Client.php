@@ -13,35 +13,12 @@ final class Client
      * 认证服务器认证链接
      * @var string
      */
-    protected string $openAuthClientURI = 'https://accounts.lizhiruanjian.com';
-    protected string $openAuthServerURI = 'https://accounts-api.litchilab.com';
-    protected string $redirectURI = '';
-    protected string $clientId = '';
     protected string $score = '';
     protected string $state = '';
-    protected string $code = '';
 
     public function __construct()
     {
 
-    }
-
-    /**
-     * @param string $redirectURI 重定向URI
-     * @return void
-     */
-    public function setRedirectURI(string $redirectURI)
-    {
-        $this->redirectURI = $redirectURI;
-    }
-
-    /**
-     * @param string $clientId 客户端ID
-     * @return void
-     */
-    public function setClientId(string $clientId)
-    {
-        $this->clientId = $clientId;
     }
 
     /**
@@ -63,40 +40,19 @@ final class Client
     }
 
     /**
-     * 开发环境下设置认证服务器客户端链接
-     * @param string $oauthURI
-     * @return void
-     */
-    public function setOpenAuthClientURIForDev(string $oauthURI)
-    {
-        //
-        $this->openAuthClientURI = $oauthURI;
-    }
-
-    /**
-     * 开发环境下设置认证服务器服务器端链接
-     * @param string $oauthURI
-     * @return void
-     */
-    public function setOpenAuthServerURIForDev(string $oauthURI)
-    {
-        $this->openAuthServerURI = $oauthURI;
-    }
-
-    /**
      * 获取授权码URI
      * @return string
      */
     public function generateAuthCodeURI()
     {
         $queryParams = http_build_query([
-            "redirect_uri" => urlencode($this->redirectURI),
-            "client_id" => $this->clientId,
+            "redirect_uri" => urlencode(get_litchi_auth_redirect_uri()),
+            "client_id" => get_litchi_auth_client_id(),
             "response_type" => "code",
-            "scope" => $this->score,
-            "state" => $this->state
+            "scope" => $this->getScore(),
+            "state" => $this->getState()
         ]);
-        return $this->openAuthClientURI . "?" . $queryParams;
+        return get_litchi_auth_client_app_uri() . "?" . $queryParams;
     }
 
     /**
@@ -104,22 +60,7 @@ final class Client
      */
     public function generateAuthTokenURI()
     {
-        return ltrim($this->openAuthServerURI, "/") . "/api/v1/open_auth_tokens";
-    }
-
-    /**
-     * 生成需要传递的数据数组
-     * @param string $code
-     * @return array
-     */
-    public function generateAuthTokenData(string $code)
-    {
-        return [
-            'client_id' => $this->clientId,
-            'grant_type' => 'authorization_code',
-            'code' => $code,
-            'redirect_uri' => urlencode($this->redirectURI)
-        ];
+        return ltrim(get_litchi_auth_server_app_uri(), "/") . "/api/v1/open_auth_tokens";
     }
 
     /**
@@ -128,7 +69,7 @@ final class Client
      */
     public function removeAccessToken(string $accessToken): RemoveResponse
     {
-        $response = Http::delete($this->openAuthServerURI . "/api/v1/open_auth_tokens/{$accessToken}", $accessToken);
+        $response = Http::delete(get_litchi_auth_server_app_uri() . "/api/v1/open_auth_tokens/{$accessToken}", $accessToken);
         return new RemoveResponse($response);
     }
 
@@ -137,9 +78,15 @@ final class Client
      * 创建token
      * @return CreateTokenResponse
      */
-    public function createNewAuthToken(): CreateTokenResponse
+    public function createNewAuthToken(string $code): CreateTokenResponse
     {
-        $response = Http::post($this->openAuthServerURI . "/api/v1/open_auth_tokens", $this->generateAuthTokenData($this->getCode()));
+        $response = Http::post(get_litchi_auth_server_app_uri() . "/api/v1/open_auth_tokens", [
+            'client_id' => get_litchi_auth_client_id(),
+            'grant_type' => 'authorization_code',
+            'code' => $code,
+            'redirect_uri' => urlencode(get_litchi_auth_redirect_uri()),
+            'secret' => get_litchi_auth_client_secret()
+        ]);
         return new CreateTokenResponse($response);
     }
 
@@ -150,19 +97,21 @@ final class Client
      */
     public function getUserByAccessToken(string $accessToken): GetUserResponse
     {
-        $response = Http::get($this->openAuthServerURI . "/api/v1/open_auth_tokens/" . $accessToken, [
+        $response = Http::get(get_litchi_auth_server_app_uri() . "/api/v1/open_auth_tokens/" . $accessToken, [
             'Authorization: Bearer ' . $accessToken
         ]);
         return new GetUserResponse($response);
     }
 
-    public function getCode(): string
+    public function getScore(): string
     {
-        return $this->code;
+        return $this->score;
     }
 
-    public function setCode(string $code): void
+    public function getState(): string
     {
-        $this->code = $code;
+        return $this->state;
     }
+
+
 }

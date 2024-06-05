@@ -11,7 +11,7 @@ class UserAuth
     public static function getUser($accessToken)
     {
         if (!self::$user) {
-            $oauthClient = create_litchi_oauth_client(get_litchi_auth_server_app_url(), get_litchi_auth_client_app_url());
+            $oauthClient = create_litchi_oauth_client();
 
             if ($accessToken) {
                 $res = $oauthClient->getUserByAccessToken($accessToken);
