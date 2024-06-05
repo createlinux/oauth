@@ -2,6 +2,10 @@
 
 namespace Createlinux\OAuth;
 
+use Createlinux\OAuth\Responses\CreateTokenResponse;
+use Createlinux\OAuth\Responses\GetUserResponse;
+use Createlinux\OAuth\Responses\RemoveResponse;
+
 final class Client
 {
 
@@ -122,14 +126,21 @@ final class Client
      * 退出登录，删除访问令牌
      * @return
      */
-    public function removeAccessToken(string $accessToken)
+    public function removeAccessToken(string $accessToken): RemoveResponse
     {
-        return Http::delete($this->openAuthServerURI . "/api/v1/open_auth_tokens/{$accessToken}", $accessToken);
+        $response = Http::delete($this->openAuthServerURI . "/api/v1/open_auth_tokens/{$accessToken}", $accessToken);
+        return new RemoveResponse($response);
     }
 
-    public function createNewAuthToken()
+    /**
+     *
+     * 创建token
+     * @return CreateTokenResponse
+     */
+    public function createNewAuthToken(): CreateTokenResponse
     {
-        return Http::post($this->openAuthServerURI."/api/v1/open_auth_tokens", $this->generateAuthTokenData($this->getCode()));
+        $response = Http::post($this->openAuthServerURI . "/api/v1/open_auth_tokens", $this->generateAuthTokenData($this->getCode()));
+        return new CreateTokenResponse($response);
     }
 
     /**
@@ -137,11 +148,12 @@ final class Client
      * @param $accessToken string 访问令牌
      * @return bool|string
      */
-    public function getUserByAccessToken(string $accessToken)
+    public function getUserByAccessToken(string $accessToken): GetUserResponse
     {
-        return Http::get($this->openAuthServerURI."/api/v1/open_auth_tokens/".$accessToken,[
-            'Authorization: Bearer '.$accessToken
+        $response = Http::get($this->openAuthServerURI . "/api/v1/open_auth_tokens/" . $accessToken, [
+            'Authorization: Bearer ' . $accessToken
         ]);
+        return new GetUserResponse($response);
     }
 
     public function getCode(): string

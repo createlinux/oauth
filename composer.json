@@ -12,5 +12,7 @@
             "email": "litchilab@foxmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "php": ">=8.0"
+    }
 }
