@@ -4,7 +4,8 @@
     "autoload": {
         "psr-4": {
             "Createlinux\\OAuth\\": "src/"
-        }
+        },
+        "files": ["src/helpers.php"]
     },
     "authors": [
         {
