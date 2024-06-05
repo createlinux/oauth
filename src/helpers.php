@@ -24,16 +24,12 @@ if (!function_exists('get_litchi_auth_server_app_url')) {
     }
 }
 if (!function_exists('create_litchi_oauth_client')) {
-    function create_litchi_oauth_client($AUTH_SERVER_APP_URL = '', $AUTH_CLIENT_APP_URL = '')
+    function create_litchi_oauth_client()
     {
-        $oauthClient = new \Createlinux\OAuth\Client();
+        $oauthClient = new Client();
         $oauthClient->setClientId(get_litchi_auth_client_id());
-        if ($AUTH_CLIENT_APP_URL) {
-            $oauthClient->setOpenAuthClientURIForDev(get_litchi_auth_client_app_url());
-        }
-        if ($AUTH_SERVER_APP_URL) {
-            $oauthClient->setOpenAuthServerURIForDev(get_litchi_auth_server_app_url());
-        }
+        $oauthClient->setOpenAuthClientURIForDev(get_litchi_auth_client_app_url());
+        $oauthClient->setOpenAuthServerURIForDev(get_litchi_auth_server_app_url());
         return $oauthClient;
     }
 }
