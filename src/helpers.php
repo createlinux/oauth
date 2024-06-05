@@ -6,7 +6,7 @@ const LITCHI_AUTH_CLIENT_ID_NAME = 'LITCHI_AUTH_CLIENT_ID';
 const LITCHI_AUTH_CLIENT_SECRET = 'LITCHI_AUTH_CLIENT_SECRET';
 const LITCHI_AUTH_CLIENT_APP_URL_NAME = 'LITCHI_AUTH_CLIENT_APP_URL';
 const LITCHI_AUTH_SERVER_APP_URL_NAME = 'LITCHI_AUTH_SERVER_APP_URL';
-const LITCHI_AUTH_REDIRECT_URI = 'LITCHI_AUTH_REDIRECT_URI';
+const LITCHI_AUTH_CLIENT_REDIRECT_URI = 'LITCHI_AUTH_CLIENT_REDIRECT_URI';
 
 if (!function_exists('get_litchi_auth_client_key')) {
     function get_litchi_auth_client_id()
@@ -43,6 +43,6 @@ if (!function_exists('get_litchi_auth_client_secret')) {
 if (!function_exists('get_litchi_auth_redirect_uri')) {
     function get_litchi_auth_redirect_uri()
     {
-        return getenv(LITCHI_AUTH_REDIRECT_URI);
+        return getenv(LITCHI_AUTH_CLIENT_REDIRECT_URI);
     }
 }
