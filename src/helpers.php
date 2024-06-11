@@ -17,12 +17,18 @@ if (!function_exists('get_litchi_auth_client_key')) {
 if (!function_exists('get_litchi_auth_client_app_uri')) {
     function get_litchi_auth_client_app_uri()
     {
+        if (getenv('APP_ENV') === 'production') {
+            return 'https://auth.lizhiruanjian.com';
+        }
         return getenv(LITCHI_AUTH_CLIENT_APP_URL_NAME);
     }
 }
 if (!function_exists('get_litchi_auth_server_app_uri')) {
     function get_litchi_auth_server_app_uri()
     {
+        if (getenv('APP_ENV') === 'production') {
+            return 'https://auth-api.lizhiruanjian.com';
+        }
         return getenv(LITCHI_AUTH_SERVER_APP_URL_NAME);
     }
 }
