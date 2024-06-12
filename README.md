@@ -7,12 +7,15 @@ oauth2.0 client package
 LITCHI_AUTH_CLIENT_ID=
 #客户端秘钥
 LITCHI_AUTH_CLIENT_SECRET=
-#认证服务器服务器端url，正式 https://accounts-api.lizhiruanjian.com
-LITCHI_AUTH_SERVER_APP_URL=q
-#认证服务器客户端端url，正式 https://accounts.lizhiruanjian.com
-LITCHI_AUTH_CLIENT_APP_URL=
 #应用回调地址
 LITCHI_AUTH_CLIENT_REDIRECT_URI=
+
+
+#认证服务器服务器端url，开发时填写，正式环境可省略
+LITCHI_AUTH_CENTER_SERVER_URI=
+#认证服务器客户端端url，开发时填写，正式环境可省略
+LITCHI_AUTH_CENTER_CLIENT_URI=
+
 ```
 
 客户端代码示例，如果存在cookie内使用以下代码，如果存在localStorage则需要修改响应体

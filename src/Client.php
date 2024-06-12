@@ -46,13 +46,13 @@ final class Client
     public function generateAuthCodeURI()
     {
         $queryParams = http_build_query([
-            "redirect_uri" => urlencode(get_litchi_auth_redirect_uri()),
+            "redirect_uri" => urlencode(get_litchi_auth_client_redirect_uri()),
             "client_id" => get_litchi_auth_client_id(),
             "response_type" => "code",
             "scope" => $this->getScore(),
             "state" => $this->getState()
         ]);
-        return get_litchi_auth_client_app_uri() . "?" . $queryParams;
+        return get_litchi_auth_center_client_uri() . "?" . $queryParams;
     }
 
     /**
@@ -60,7 +60,7 @@ final class Client
      */
     public function generateAuthTokenURI()
     {
-        return ltrim(get_litchi_auth_server_app_uri(), "/") . "/api/v1/open_auth_tokens";
+        return ltrim(get_litchi_auth_center_server_uri(), "/") . "/api/v1/open_auth_tokens";
     }
 
     /**
@@ -69,7 +69,7 @@ final class Client
      */
     public function removeAccessToken(string $accessToken): RemoveResponse
     {
-        $response = Http::delete(get_litchi_auth_server_app_uri() . "/api/v1/open_auth_tokens/{$accessToken}", $accessToken);
+        $response = Http::delete(get_litchi_auth_center_server_uri() . "/api/v1/open_auth_tokens/{$accessToken}", $accessToken);
         return new RemoveResponse($response);
     }
 
@@ -80,11 +80,11 @@ final class Client
      */
     public function createNewAuthToken(string $code): CreateTokenResponse
     {
-        $response = Http::post(get_litchi_auth_server_app_uri() . "/api/v1/open_auth_tokens", [
+        $response = Http::post(get_litchi_auth_center_server_uri() . "/api/v1/open_auth_tokens", [
             'client_id' => get_litchi_auth_client_id(),
             'grant_type' => 'authorization_code',
             'code' => $code,
-            'redirect_uri' => urlencode(get_litchi_auth_redirect_uri()),
+            'redirect_uri' => urlencode(get_litchi_auth_client_redirect_uri()),
             'secret' => get_litchi_auth_client_secret()
         ]);
         return new CreateTokenResponse($response);
@@ -97,7 +97,7 @@ final class Client
      */
     public function getUserByAccessToken(string $accessToken): GetUserResponse
     {
-        $response = Http::get(get_litchi_auth_server_app_uri() . "/api/v1/open_auth_tokens/" . $accessToken, [
+        $response = Http::get(get_litchi_auth_center_server_uri() . "/api/v1/open_auth_tokens/" . $accessToken, [
             'Authorization: Bearer ' . $accessToken
         ]);
         return new GetUserResponse($response);
