@@ -8,18 +8,8 @@ class UserAuth
 {
     protected static $user = null;
 
-    public static function getUser($accessToken)
+    public static function getUser()
     {
-        if (!self::$user) {
-            $oauthClient = create_litchi_oauth_client();
-
-            if ($accessToken) {
-                $res = $oauthClient->getUserByAccessToken($accessToken);
-                if ($res->isSuccess()) {
-                    UserAuth::setUser($res->getUser());
-                }
-            }
-        }
         return self::$user;
     }
 
