@@ -95,10 +95,11 @@ final class Client
      * 返回token信息和用户信息
      * @return bool|string
      */
-    public function getUserByAccessToken(): GetUserResponse
+    public function getUserByAccessToken(string $accessToken = ''): GetUserResponse
     {
-        $response = Http::get(get_litchi_auth_center_server_uri() . "/api/v1/open_auth_tokens/" . $this->getAccessToken(), [
-            'Authorization: Bearer ' . $this->getAccessToken()
+        $accessToken = $accessToken ?: $this->getAccessToken();
+        $response = Http::get(get_litchi_auth_center_server_uri() . "/api/v1/open_auth_tokens/" . $accessToken, [
+            'Authorization: Bearer ' . $accessToken
         ]);
         return new GetUserResponse($response);
     }
