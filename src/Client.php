@@ -15,10 +15,11 @@ final class Client
      */
     protected string $score = '';
     protected string $state = '';
+    private string $accessToken;
 
     public function __construct()
     {
-
+        $this->accessToken = get_litchi_access_token();
     }
 
     /**
@@ -92,13 +93,12 @@ final class Client
 
     /**
      * 返回token信息和用户信息
-     * @param $accessToken string 访问令牌
      * @return bool|string
      */
-    public function getUserByAccessToken(string $accessToken): GetUserResponse
+    public function getUserByAccessToken(): GetUserResponse
     {
-        $response = Http::get(get_litchi_auth_center_server_uri() . "/api/v1/open_auth_tokens/" . $accessToken, [
-            'Authorization: Bearer ' . $accessToken
+        $response = Http::get(get_litchi_auth_center_server_uri() . "/api/v1/open_auth_tokens/" . $this->getAccessToken(), [
+            'Authorization: Bearer ' . $this->getAccessToken()
         ]);
         return new GetUserResponse($response);
     }
@@ -111,6 +111,11 @@ final class Client
     public function getState(): string
     {
         return $this->state;
+    }
+
+    public function getAccessToken(): string
+    {
+        return $this->accessToken;
     }
 
 

@@ -46,3 +46,11 @@ if (!function_exists('get_litchi_auth_client_redirect_uri')) {
         return getenv('LITCHI_AUTH_CLIENT_REDIRECT_URI');
     }
 }
+
+if (!function_exists('get_litchi_access_token')) {
+    function get_litchi_access_token()
+    {
+        $headers = getallheaders();
+        return "";
+    }
+}
