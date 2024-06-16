@@ -51,6 +51,6 @@ if (!function_exists('get_litchi_access_token')) {
     function get_litchi_access_token()
     {
         $headers = getallheaders();
-        return explode(" ", $headers['Authorization'] ?? '')[1] ?? '';
+        return explode(" ", $headers['authorization'] ?? '')[1] ?? '';
     }
 }
