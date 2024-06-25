@@ -119,5 +119,15 @@ final class Client
         return $this->accessToken;
     }
 
+    public function getUserRoutes()
+    {
+        
+    }
+
+    public function canAccessTheRoute()
+    {
+
+    }
+
 
 }
