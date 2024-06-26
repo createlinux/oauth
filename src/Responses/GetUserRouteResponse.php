@@ -29,8 +29,13 @@ class GetUserRouteResponse
         return $this->body['context'];
     }
 
-    public function getUserRoutes(): array
+    public function getAll(): array
     {
         return $this->getContext()['items'] ?? [];
+    }
+
+    public function hasAccessPermission(string $routeHash): bool
+    {
+        return in_array($routeHash,array_column($this->getAll(),'routeHash'));
     }
 }
