@@ -36,7 +36,7 @@ class CreateTokenResponse
      */
     public function getAccessToken(): string
     {
-        return $this->getContext()['access_token'] ?? '';
+        return $this->getContext()['accessToken'] ?? '';
     }
 
     /**
@@ -46,7 +46,7 @@ class CreateTokenResponse
      */
     public function getRefreshToken(): string
     {
-        return $this->getContext()['refresh_token'] ?? '';
+        return $this->getContext()['refreshToken'] ?? '';
     }
 
     /**
@@ -56,7 +56,7 @@ class CreateTokenResponse
      */
     public function getExpirationSeconds(): int
     {
-        return $this->getContext()['expiration_seconds'] ?? 0;
+        return $this->getContext()['expirationSeconds'] ?? 0;
     }
 
     /**
@@ -66,6 +66,6 @@ class CreateTokenResponse
      */
     public function getExpiredAt():string
     {
-        return $this->getContext()['expired_at'] ?? '';
+        return $this->getContext()['expiredAt'] ?? '';
     }
 }
