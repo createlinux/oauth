@@ -4,6 +4,7 @@ namespace Createlinux\OAuth;
 
 use Createlinux\OAuth\Responses\CreateTokenResponse;
 use Createlinux\OAuth\Responses\GetUserResponse;
+use Createlinux\OAuth\Responses\GetUserRouteResponse;
 use Createlinux\OAuth\Responses\RemoveResponse;
 
 final class Client
@@ -99,7 +100,7 @@ final class Client
     {
         $accessToken = $accessToken ?: $this->getAccessToken();
         $response = Http::get(get_litchi_auth_center_server_uri() . "/api/v1/open_auth_tokens/" . $accessToken, [
-            'Authorization: Bearer ' . $accessToken
+            $this->spliceAuthorization($accessToken)
         ]);
         return new GetUserResponse($response);
     }
@@ -119,14 +120,21 @@ final class Client
         return $this->accessToken;
     }
 
-    public function getUserRoutes()
-    {
-        
+    private function spliceAuthorization(string $accessToken){
+        return 'Authorization: Bearer ' . $accessToken;
     }
 
-    public function canAccessTheRoute()
+    /**
+     *
+     * 获取用户可访问路由
+     * @return GetUserRouteResponse
+     */
+    public function getUserRoutes()
     {
-
+        $response = Http::get(get_litchi_auth_center_server_uri()."/api/v1/user_routes",[
+            $this->spliceAuthorization($this->getAccessToken())
+        ]);
+        return new GetUserRouteResponse($response);
     }
 
 
