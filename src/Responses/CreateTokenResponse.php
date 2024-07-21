@@ -16,7 +16,7 @@ class CreateTokenResponse
 
     public function isSuccess(): bool
     {
-        return $this->body['code'] === 201;
+        return $this->body['code'] === '1-201';
     }
 
     public function getMessage(): string
