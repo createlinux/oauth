@@ -7,7 +7,8 @@ class Http
     public static function post(string $url, array $data, array $header = [])
     {
         $headers = [
-            'Content-Type: application/json'
+            'Content-Type: application/json',
+            'Application-Name: OAuth-Service'
         ];
         $headers = array_merge($headers, $header);
         $ch = curl_init($url);
@@ -27,7 +28,8 @@ class Http
             'Content-Type: application/json'
         ];
         $headers = array_merge($headers, [
-            'Authorization: bearer ' . $accessToken
+            'Authorization: bearer ' . $accessToken,
+            'Application-Name: OAuth-Service'
         ]);
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
@@ -42,7 +44,8 @@ class Http
     public static function get(string $url, array $header = [])
     {
         $headers = [
-            'Content-Type: application/json'
+            'Content-Type: application/json',
+            'Application-Name: OAuth-Service'
         ];
         $headers = array_merge($headers, $header);
         $ch = curl_init($url);
