@@ -8,7 +8,8 @@ class Http
     {
         $headers = [
             'Content-Type: application/json',
-            'Application-Name: OAuth-Service'
+            'Application-Name: OAuth-Service',
+            'Dir-Type: frontend'
         ];
         $headers = array_merge($headers, $header);
         $ch = curl_init($url);
@@ -29,7 +30,8 @@ class Http
         ];
         $headers = array_merge($headers, [
             'Authorization: bearer ' . $accessToken,
-            'Application-Name: OAuth-Service'
+            'Application-Name: OAuth-Service',
+            'Dir-Type: frontend'
         ]);
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
@@ -45,7 +47,8 @@ class Http
     {
         $headers = [
             'Content-Type: application/json',
-            'Application-Name: OAuth-Service'
+            'Application-Name: OAuth-Service',
+            'Dir-Type: frontend'
         ];
         $headers = array_merge($headers, $header);
         $ch = curl_init($url);
