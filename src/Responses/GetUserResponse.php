@@ -16,7 +16,7 @@ class GetUserResponse
 
     public function isSuccess(): bool
     {
-        return $this->body['code'] === 200;
+        return $this->body['code'] === '1-200' || $this->getMessage() === 'ok';
     }
 
     public function getMessage(): string

@@ -2,6 +2,19 @@
 
 use \Createlinux\OAuth\Client;
 
+if(!function_exists('get_all_headers')){
+    function get_all_headers() {
+        $headers = array();
+        foreach ($_SERVER as $name => $value) {
+            if (substr($name, 0, 5) == 'HTTP_') {
+                $headerName = str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))));
+                $headers[$headerName] = $value;
+            }
+        }
+        return $headers;
+    }
+}
+
 if (!function_exists('get_litchi_auth_client_key')) {
     function get_litchi_auth_client_id()
     {
@@ -50,7 +63,7 @@ if (!function_exists('get_litchi_auth_client_redirect_uri')) {
 if (!function_exists('get_litchi_access_token')) {
     function get_litchi_access_token()
     {
-        $headers = getallheaders();
+        $headers = get_all_headers();
         if(isset($headers['authorization'])){
             return explode(" ", $headers['authorization'] ?? '')[1] ?? '';
         }
