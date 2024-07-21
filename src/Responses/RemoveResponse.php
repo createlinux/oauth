@@ -17,7 +17,7 @@ class RemoveResponse
 
     public function isSuccess(): bool
     {
-        return $this->body['code'] === 200;
+        return $this->body['code'] === '1-200';
     }
 
     public function getMessage(): string
